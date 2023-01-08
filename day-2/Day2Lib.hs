@@ -3,7 +3,8 @@ module Day2Lib (
     GameResult,
     parseInput,
     plays,
-    gamePoint
+    gamePoint,
+    mapRule
 ) where
 
 data Sign = Scissor | Paper | Rock deriving (Show, Eq)
@@ -49,6 +50,15 @@ pointFromGameResult Win = 6
 gamePoint :: (Sign, GameResult) -> Int
 gamePoint (sign, result) = sum [pointFromSign sign,pointFromGameResult result]
 
-
-
-
+-- problem 2
+-- remap the input so we get back to first problem, by translating the second part of the pair
+-- X ie Rock -> I should lose
+-- Y ie Paper -> draw
+-- Z ie Scissor ->I should win
+mapRule :: (Sign, Sign) -> (Sign, Sign)
+mapRule (opponentSign, Paper) = (opponentSign, opponentSign)
+mapRule (Paper, mySign) = (Paper, mySign)
+mapRule (Scissor, Rock) = (Scissor, Paper)
+mapRule (Scissor, Scissor) = (Scissor, Rock)
+mapRule (Rock, Scissor) = (Rock, Paper)
+mapRule (Rock, Rock) = (Rock, Scissor)
