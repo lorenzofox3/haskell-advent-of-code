@@ -9,21 +9,6 @@ module Day2Lib (
 data Sign = Scissor | Paper | Rock deriving (Show, Eq)
 data GameResult = Win | Lose | Draw deriving (Show, Eq)
 
-vsRock :: Sign -> GameResult
-vsRock Paper = Win
-vsRock Rock = Draw
-vsRock Scissor = Lose
-
-vsPaper :: Sign -> GameResult
-vsPaper Paper = Draw
-vsPaper Rock = Lose
-vsPaper Scissor = Win
-
-vsScissor :: Sign -> GameResult
-vsScissor Paper = Lose
-vsScissor Rock = Win
-vsScissor Scissor = Draw
-
 gameRound :: (Sign, Sign) -> GameResult
 gameRound (opponentSign, mySign)
     | opponentSign == mySign = Draw
@@ -33,7 +18,6 @@ gameRound (opponentSign, mySign)
                                                  (Scissor, Rock) -> Win
                                                  (Rock, Scissor) -> Lose
                                                  (Rock, Paper) -> Win
-
 
 fromString :: String -> Sign
 fromString "A" = Rock
