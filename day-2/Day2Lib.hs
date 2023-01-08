@@ -25,9 +25,15 @@ vsScissor Rock = Win
 vsScissor Scissor = Draw
 
 gameRound :: (Sign, Sign) -> GameResult
-gameRound (Scissor, mySign) = vsScissor(mySign)
-gameRound (Paper, mySign) = vsPaper(mySign)
-gameRound (Rock, mySign) = vsRock(mySign)
+gameRound (opponentSign, mySign) =
+    | opponentSign `==` mySign = Draw
+    | otherwise = case (opponentSign, mySign) of (Paper, Rock) -> Lose
+                                                 (Paper, Scissor) -> Win
+                                                 (Scissor, Paper) -> Lose
+                                                 (Scissor, Rock) -> Win
+                                                 (Rock, Scissor) -> Lose
+                                                 (Rock, Paper) -> Win
+
 
 fromString :: String -> Sign
 fromString "A" = Rock
